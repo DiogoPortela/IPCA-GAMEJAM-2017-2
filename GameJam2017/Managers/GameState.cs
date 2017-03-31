@@ -15,6 +15,8 @@ namespace GameJam2017
 
         public GameState()
         {
+            Map mapateste = new Map();
+            mapateste.Generate();
             PlayerOne = new PlayerManager("teste", new Vector2(20, 20), Vector2.One * 25, PlayerNumber.playerOne);
         }
         public void Update()

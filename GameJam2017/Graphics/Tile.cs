@@ -19,7 +19,7 @@ namespace GameJam2017
 
         public Tile(int tileNumber, Vector2 coordinates, int size) : base("Tile" + tileNumber, coordinates * size, Vector2.One, 0f)
         {
-            this.Rectangle = Camera.CalculatePixelRectangle(new Vector2(coordinates.X * size, coordinates.Y * size), new Vector2(size, size));
+            this.Rectangle = CameraScaleManager.CalculatePixelRectangle(new Vector2(coordinates.X * size, coordinates.Y * size), new Vector2(size, size));
             this.Coordinates = coordinates;
         }
 

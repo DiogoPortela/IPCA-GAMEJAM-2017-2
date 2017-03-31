@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using GameJam2017.Graphics;
 
 namespace GameJam2017
 {

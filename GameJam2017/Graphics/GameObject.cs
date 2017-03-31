@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using GameJam2017.Graphics;
 
 namespace GameJam2017
 {
@@ -14,7 +15,15 @@ namespace GameJam2017
         protected Vector2 TextureCenter; //For rotations.
         protected Rectangle Rectangle;
 
-        public Vector2 Position { get; set; }
+        //public Vector2 Position { get; set; }
+        private Vector2 position;
+
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
         public Vector2 Size { get; set; }
         public float RotationAngle { get; set; }
 
@@ -23,6 +32,7 @@ namespace GameJam2017
         protected Vector2 objectDiretion;
 
         public bool isActive { get; set; }    //If it's necessary to turn an object on/off.
+        public bool hasJumped;
 
 
         //------------->CONSTRUCTORS<-------------//
@@ -47,6 +57,7 @@ namespace GameJam2017
             this.speedDirection = Vector2.Zero;
             this.objectDiretion = -Vector2.UnitY;
             this.isActive = true;
+            this.hasJumped = false;
         }
 
 
@@ -72,16 +83,61 @@ namespace GameJam2017
         {
             if(isActive)
             {
-                this.Position += direction;
+                this.position += direction;
             }
         }
         public void DrawObject()
         {
             if(isActive)
             {
-                this.Rectangle = CameraScaleManager.CalculatePixelRectangle(this.Position, this.Size);
+                this.Rectangle = CameraScaleManager.CalculatePixelRectangle(this.position, this.Size);
                 Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
             }            
         }
-    }
+
+        public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
+        {
+            if (Rectangle.TouchingTopOf(newRectangle))
+            {
+                Rectangle.Y = newRectangle.Y - Rectangle.Height;
+                speedDirection.Y = 0f;
+                hasJumped = false;
+            }
+
+            if(Rectangle.TouchingLeftOf(newRectangle))
+            {
+                position.X = newRectangle.X - Rectangle.Width - 2;
+            }
+
+            if(Rectangle.TouchingRightOf(newRectangle))
+            {
+                position.X = newRectangle.X + newRectangle.Width + 2;
+            }
+
+            if(Rectangle.TouchingBottomOf(newRectangle))
+            {
+                speedDirection.Y = 1f;
+            }
+
+            if(position.X < 0)
+            {
+                position.X = 0;
+            }
+
+            if(position.X > xOffset - Rectangle.Width)
+            {
+                position.X = xOffset - Rectangle.Width;
+            }
+
+            if(position.Y < 0)
+            {
+                speedDirection.Y = 1f;
+            }
+
+            if(position.Y > yOffset - Rectangle.Height)
+            {
+                position.Y = yOffset - Rectangle.Height;
+            }
+
+        }
 }
