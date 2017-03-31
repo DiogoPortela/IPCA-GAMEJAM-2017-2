@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace GameJam2017
 {
@@ -9,13 +10,19 @@ namespace GameJam2017
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        static public GraphicsDeviceManager graphics;
+        static public SpriteBatch spriteBatch;
+        static public ContentManager content;
+        static GameState gameState;
+
 
         public Game1()
-        {
+        {            
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 800;
+            graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
+            content = Content;
         }
 
         /// <summary>
@@ -26,7 +33,8 @@ namespace GameJam2017
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            Camera.SetCameraWindow(Vector2.Zero, 100);
+            gameState = new GameState();
 
             base.Initialize();
         }
@@ -40,7 +48,6 @@ namespace GameJam2017
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -62,7 +69,7 @@ namespace GameJam2017
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            gameState.Update();
 
             base.Update(gameTime);
         }
@@ -75,7 +82,11 @@ namespace GameJam2017
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
+
+            gameState.Draw();
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
