@@ -7,9 +7,8 @@ using Microsoft.Xna.Framework;
 
 namespace GameJam2017
 {
-    public class Camera
+    public class CameraScaleManager
     {
-
         static private Vector2 WorldOrigin;    //User-space world origin.
         static private float Width;            //User-space Width.
         static private float Height;           //User-space Height.

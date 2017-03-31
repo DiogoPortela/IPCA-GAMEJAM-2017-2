@@ -79,7 +79,7 @@ namespace GameJam2017
         {
             if(isActive)
             {
-                this.Rectangle = Camera.CalculatePixelRectangle(this.Position, this.Size);
+                this.Rectangle = CameraScaleManager.CalculatePixelRectangle(this.Position, this.Size);
                 Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
             }            
         }
