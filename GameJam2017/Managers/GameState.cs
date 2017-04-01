@@ -5,18 +5,33 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameJam2017
 {
-    class GameState
+    class GameState : Game
     {
         static public PlayerManager PlayerOne;
         static public PlayerManager PlayerTwo;
+
+        //Viewport defaultView;
+        Viewport leftView;
+        Viewport rightView;
+
+        Camera cameraLeft, cameraRight;
 
         public GameState()
         {
             Map mapateste = new Map();
             mapateste.Generate();
+            leftView = rightView = GraphicsDevice.Viewport;
+            leftView.Width /= 2;
+            rightView.Width /= 2;
+            rightView.X = leftView.Width;
+
+            cameraLeft = new Camera();
+            cameraRight = new Camera();
+
             PlayerOne = new PlayerManager("teste", new Vector2(20, 20), Vector2.One * 25, PlayerNumber.playerOne);
         }
         public void Update()

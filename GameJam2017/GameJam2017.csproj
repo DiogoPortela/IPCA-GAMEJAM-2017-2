@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Graphics\CameraScaleManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Graphics\CollisionManager.cs" />
