@@ -46,9 +46,13 @@ namespace GameJam2017
         //Constructor with all the atributtes that can be set.
         public GameObject(string texture, Vector2 position, Vector2 size, float rotation)
         {
-            this.Texture = Game1.content.Load<Texture2D>(texture);
-            this.TextureCenter.X = Texture.Width / 2;
-            this.TextureCenter.Y = Texture.Height / 2;
+            if(texture != null)
+            {
+                this.Texture = Game1.content.Load<Texture2D>(texture);
+                this.TextureCenter.X = Texture.Width / 2;
+                this.TextureCenter.Y = Texture.Height / 2;
+            }
+            
             this.Position = position;
             this.Size = size;
             this.RotationAngle = rotation;

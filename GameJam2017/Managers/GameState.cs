@@ -40,10 +40,11 @@ namespace GameJam2017
 
             //Initializing cameras.
             cameraUp = new Camera(Vector2.Zero, 100, ((float)upView.Height / upView.Width));
-            cameraDown = new Camera(new Vector2(0,0), 100, ((float)downView.Height / downView.Width));
+            cameraDown = new Camera(new Vector2(0,50), 100, ((float)downView.Height / downView.Width));
             #endregion
 
-            PlayerOne = new PlayerManager("Tile10", new Vector2(0, 10), Vector2.One * 10, PlayerNumber.playerOne);
+            PlayerOne = new PlayerManager(new Vector2(0, 10), Vector2.One * 10, PlayerNumber.playerOne);
+            PlayerTwo = new PlayerManager(new Vector2(0, 60), Vector2.One * 10, PlayerNumber.playerTwo);
             teste = new GameObject("Tile12", new Vector2(0, 40), Vector2.One * 10, 0f);
 
         }
@@ -52,13 +53,9 @@ namespace GameJam2017
         /// </summary>
         public void StateUpdate(GameTime gameTime)
         {
-            if (InputManager.MovementPlayerOne.Right == ButtonState.Pressed)
-                PlayerOne.Move(Vector2.UnitX * 0.2f);
-            if (InputManager.MovementPlayerOne.Left == ButtonState.Pressed)
-                PlayerOne.Move(-Vector2.UnitX * 0.2f);
-            if (InputManager.MovementPlayerOne.Up == ButtonState.Pressed)
-                PlayerOne.Jump(gameTime);
-            PlayerOne.currentAnimation.Play(gameTime);
+            PlayerOne.PlayerMovement(gameTime);
+            PlayerTwo.PlayerMovement(gameTime);
+
         }
         /// <summary>
         /// Draws the whole gamestate.
@@ -84,6 +81,7 @@ namespace GameJam2017
         {
             Game1.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.transform);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
             PlayerOne.DrawObject(camera);
+            PlayerTwo.DrawObject(camera);
             teste.DrawObject(camera);
             Game1.spriteBatch.End();
         }

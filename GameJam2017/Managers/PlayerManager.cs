@@ -14,58 +14,104 @@ namespace GameJam2017
     {
         playerOne = 1, playerTwo
     }
+    internal enum CurrentInput
+    {
+        NoInput, Up, Down, Right, Left
+    }
     internal class PlayerManager : GameObject
     {
         public PlayerNumber pNumber;
+        private CurrentInput currentInput;
         protected Animation[] animations;
         public Animation currentAnimation;
 
-        public PlayerManager(string texture, Vector2 position, Vector2 size,PlayerNumber number) : base(texture, position, size, 0f)
+        public PlayerManager(Vector2 position, Vector2 size, PlayerNumber number) : base(null, position, size, 0f)
         {
             this.animations = new Animation[18];
             this.pNumber = number;
+            this.currentInput = CurrentInput.NoInput;
 
-            this.currentAnimation = new Animation("walk", "Walk P1", Vector2.One * 64, 8, 200f);
-
-            if(number == PlayerNumber.playerOne)
+            if (number == PlayerNumber.playerOne)
             {
-                //animations.Add();
+                animations[1] = new Animation("walk", "Walk Final P1", Vector2.One * 64, 8, 100f);
+                this.currentAnimation = animations[1];
             }
             else
             {
-                //animations.Add();
+                animations[1] = new Animation("walk", "Walk Final P2", Vector2.One * 64, 8, 100f);
+                this.currentAnimation = animations[1];
             }
         }
 
+        /// <summary>
+        /// Deals with all the movement and animations.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void PlayerMovement(GameTime gameTime)
+        {
+            #region PlayerOne
+            if (pNumber == PlayerNumber.playerOne)
+            {
+                if (InputManager.MovementPlayerOne.Right == ButtonState.Pressed && InputManager.MovementPlayerOne.Left != ButtonState.Pressed)
+                {
+                    if (currentInput != CurrentInput.Right)
+                    {
+                        this.currentAnimation.Stop();
+                        this.currentAnimation = animations[1];
+                        currentInput = CurrentInput.Right;
+
+                    }
+                    this.Move(Vector2.UnitX * 0.2f);
+                }
+                if (InputManager.MovementPlayerOne.Left == ButtonState.Pressed && InputManager.MovementPlayerOne.Right != ButtonState.Pressed)
+                {
+                    this.Move(-Vector2.UnitX * 0.2f);
+                }
+                if (InputManager.MovementPlayerOne.Up == ButtonState.Pressed)
+                {
+                    this.Jump(gameTime);
+                }
+            }
+            #endregion
+
+            #region PlayerTwo
+            if(pNumber == PlayerNumber.playerTwo)
+            {
+
+            }
+            #endregion
+
+            this.currentAnimation.Play(gameTime);
+        }
 
         public void Jump(GameTime gameTime)
         {
             position += speedDirection;
 
-            if(Keyboard.GetState().IsKeyDown(Keys.W) && hasJumped == false)
+            if (Keyboard.GetState().IsKeyDown(Keys.W) && hasJumped == false)
             {
                 this.position.Y += 10f;
                 speedDirection.Y = 5f;
                 hasJumped = true;
             }
 
-            if(hasJumped == true)
+            if (hasJumped == true)
             {
                 float airtime = 3;
                 speedDirection.Y -= 0.15f * airtime;
             }
 
-            if(position.Y - Texture.Height <= 52)
+            if (position.Y - Texture.Height <= 52)
             {
                 hasJumped = false;
             }
 
-            if(hasJumped == false)
+            if (hasJumped == false)
             {
                 speedDirection.Y = 0;
             }
         }
-          
+
         public override void DrawObject(Camera camera)
         {
             if (isActive)
