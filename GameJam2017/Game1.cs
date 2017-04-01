@@ -69,7 +69,7 @@ namespace GameJam2017
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            gameState.Update();
+            gameState.Update(gameTime);
 
             base.Update(gameTime);
         }

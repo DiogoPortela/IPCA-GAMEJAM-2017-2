@@ -48,13 +48,14 @@ namespace GameJam2017
         /// <summary>
         /// Updates the whole gamestate.
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if (InputManager.MovementPlayerOne.Right == ButtonState.Pressed)
                 PlayerOne.Move(Vector2.UnitX);
             if (InputManager.MovementPlayerOne.Left == ButtonState.Pressed)
                 PlayerOne.Move(-Vector2.UnitX);
-            //cameraLeft.Update(PlayerOne.Position);
+            if (InputManager.MovementPlayerOne.Up == ButtonState.Pressed)
+                PlayerOne.Jump(gameTime);
         }
         /// <summary>
         /// Draws the whole gamestate.

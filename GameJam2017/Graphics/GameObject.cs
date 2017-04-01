@@ -16,7 +16,7 @@ namespace GameJam2017
         protected Rectangle Rectangle;
 
         //public Vector2 Position { get; set; }
-        private Vector2 position;
+        protected Vector2 position;
 
         public Vector2 Position
         {
@@ -57,7 +57,7 @@ namespace GameJam2017
             this.speedDirection = Vector2.Zero;
             this.objectDiretion = -Vector2.UnitY;
             this.isActive = true;
-            this.hasJumped = false;
+            this.hasJumped = true;
         }
 
 
