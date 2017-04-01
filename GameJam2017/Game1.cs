@@ -80,13 +80,13 @@ namespace GameJam2017
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
+            GraphicsDevice.Clear(Color.HotPink);
 
             gameState.Draw();
 
-            spriteBatch.End();
+            /*spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
+            
+            spriteBatch.End();*/
 
             base.Draw(gameTime);
         }
