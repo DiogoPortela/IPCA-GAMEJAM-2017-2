@@ -25,9 +25,12 @@ namespace GameJam2017
         protected Animation[] animations;
         public Animation currentAnimation;
 
+        public bool isAdult;
         public bool isFalling;
         public bool hasJumped;
         private float fallingSpeed;
+
+        private const float movingSpeed = 0.4f;
 
         //------------->CONSTRUCTORS<-------------//
 
@@ -39,13 +42,16 @@ namespace GameJam2017
 
             if (number == PlayerNumber.playerOne)
             {
-                animations[1] = new Animation("walk", "Walk Final P1", Vector2.One * 64, 8, 100f);
-                this.currentAnimation = animations[1];
+                animations[2] = new Animation("walkAdult", "Walk Final P1", Vector2.One * 64, 8, 100f);
+                animations[3] = new Animation("walkKid", "Walk Kid P1", Vector2.One * 32, 8, 100f);
+                this.currentAnimation = animations[3];
+                isAdult = false;
             }
             else
             {
                 animations[1] = new Animation("walk", "Walk Final P2", Vector2.One * 64, 8, 100f);
                 this.currentAnimation = animations[1];
+                isAdult = true;
             }
         }
 
@@ -68,15 +74,15 @@ namespace GameJam2017
                     if (currentInput != CurrentInput.Right)
                     {
                         this.currentAnimation.Stop();
-                        this.currentAnimation = animations[1];
+                        this.currentAnimation = animations[3];
                         currentInput = CurrentInput.Right;
 
                     }
-                    this.Move(Vector2.UnitX * 0.2f);
+                    this.Move(Vector2.UnitX * movingSpeed);
                 }
                 if (InputManager.MovementPlayerOne.Left == ButtonState.Pressed && InputManager.MovementPlayerOne.Right != ButtonState.Pressed)
                 {
-                    this.Move(-Vector2.UnitX * 0.2f);
+                    this.Move(-Vector2.UnitX * movingSpeed);
                 }
 
                 #region Y movement
@@ -106,7 +112,44 @@ namespace GameJam2017
             #region PlayerTwo
             if(pNumber == PlayerNumber.playerTwo)
             {
+                //Movement Controls.
+                if (InputManager.MovementPlayerTwo.Right == ButtonState.Pressed && InputManager.MovementPlayerTwo.Left != ButtonState.Pressed)
+                {
+                    if (currentInput != CurrentInput.Right)
+                    {
+                        this.currentAnimation.Stop();
+                        this.currentAnimation = animations[1];
+                        currentInput = CurrentInput.Right;
 
+                    }
+                    this.Move(Vector2.UnitX * movingSpeed);
+                }
+                if (InputManager.MovementPlayerTwo.Left == ButtonState.Pressed && InputManager.MovementPlayerTwo.Right != ButtonState.Pressed)
+                {
+                    this.Move(-Vector2.UnitX * movingSpeed);
+                }
+
+                #region Y movement
+                if (this.Position.Y < this.Size.X + 50)
+                {
+                    isFalling = false;
+                    hasJumped = false;
+                    fallingSpeed = 0;
+                    this.position.Y = this.Size.X + 50;
+                }
+                //While it's falling fall.
+                if (isFalling)
+                {
+                    this.Fall(gameTime);
+                }
+
+                if (InputManager.MovementPlayerTwo.Up == ButtonState.Pressed && !hasJumped)
+                {
+                    fallingSpeed = 0.7f;
+                    isFalling = true;
+                    hasJumped = true;
+                }
+                #endregion
             }
             #endregion
 

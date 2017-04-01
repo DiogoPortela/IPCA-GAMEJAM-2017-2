@@ -20,14 +20,11 @@ namespace GameJam2017
 
         static Button btnPlay;
 
-        int screenWidth = 800, screenHeight = 600;
-        
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferredBackBufferHeight = 768;
             Content.RootDirectory = "Content";
             content = Content;
         }
@@ -57,8 +54,6 @@ namespace GameJam2017
             btnPlay = new Button(content.Load<Texture2D>("Poop"), graphics.GraphicsDevice);
             btnPlay.setPosition(new Vector2(0, 0));
             //menuState = new MenuState();
-            graphics.PreferredBackBufferWidth = screenWidth;
-            graphics.PreferredBackBufferHeight = screenHeight;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
@@ -124,7 +119,7 @@ namespace GameJam2017
             {
                 case ScreenSelect.MainMenu:
                     spriteBatch.Begin();
-                    spriteBatch.Draw(Content.Load<Texture2D>("MainMenu"), new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
+                    spriteBatch.Draw(Content.Load<Texture2D>("MainMenu"), new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White);
                     btnPlay.Draw(spriteBatch);
                     spriteBatch.End();
                     break;

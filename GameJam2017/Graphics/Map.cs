@@ -14,6 +14,7 @@ namespace GameJam2017
         public List<Tile> collidableTiles;
         private int height;
         private int width;
+        private Vector2 position;
 
         public List<Tile> ListOfTiles
         {
@@ -30,10 +31,11 @@ namespace GameJam2017
 
         //------------->CONSTRUCTORS<-------------//
 
-        public Map()
+        public Map(Vector2 position)
         {
             listOfTiles = new List<Tile>();
             collidableTiles = new List<Tile>();
+            this.position = position;
         }
 
         //------------->FUNCTIONS && METHODS<-------------//
@@ -51,7 +53,7 @@ namespace GameJam2017
                     int number = map[y, x];
 
                     if (number > 0)
-                        listOfTiles.Add(new Tile(number, new Vector2(x, y + 1), size));
+                        listOfTiles.Add(new Tile(number, new Vector2(x + position.X, y + 1 + position.Y), size));
                     switch(number)
                     {
                         //ADD TO THE COLLIDABLE LIST

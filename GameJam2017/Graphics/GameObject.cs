@@ -11,7 +11,7 @@ namespace GameJam2017
     public class GameObject
     {
         protected Texture2D Texture;
-        protected Vector2 TextureCenter; //For rotations.
+        public Vector2 TextureCenter; //For rotations.
         protected Rectangle Rectangle;
 
         //public Vector2 Position { get; set; }
@@ -61,7 +61,6 @@ namespace GameJam2017
             this.isActive = true;
         }
 
-
         //------------->FUNCTIONS && METHODS<-------------//
 
         /// <summary>
@@ -96,6 +95,14 @@ namespace GameJam2017
             if (isActive)
             {
                 this.Rectangle = camera.CalculatePixelRectangle(this.position, this.Size);
+                Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
+            }
+        }
+        public virtual void DrawObjectFree(Camera camera, float size)
+        {
+            if (isActive)
+            {
+                this.Rectangle = camera.CalculatePixelRectangle(this.position, this.Size * size);
                 Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
             }
         }

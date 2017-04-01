@@ -13,7 +13,7 @@ namespace GameJam2017
     {
         static public PlayerManager PlayerOne;
         static public PlayerManager PlayerTwo;
-        static public GameObject teste;
+        static public GameObject UICenter;
 
         Viewport defaultView, upView, downView;
         Camera cameraUp, cameraDown;
@@ -23,7 +23,8 @@ namespace GameJam2017
         public GameState()
         {
             #region map generation
-            Map mapateste = new Map();
+            Map mapTop = new Map(Vector2.Zero);
+            Map mapBottom = new Map(new Vector2(0, 50));
             //mapateste.Generate();
             #endregion
 
@@ -43,10 +44,10 @@ namespace GameJam2017
             cameraDown = new Camera(new Vector2(0,50), 100, ((float)downView.Height / downView.Width));
             #endregion
 
-            PlayerOne = new PlayerManager(new Vector2(0, 10), Vector2.One * 10, PlayerNumber.playerOne);
+            PlayerOne = new PlayerManager(new Vector2(0, 10), Vector2.One * 5, PlayerNumber.playerOne);
             PlayerTwo = new PlayerManager(new Vector2(0, 60), Vector2.One * 10, PlayerNumber.playerTwo);
-            teste = new GameObject("Tile12", new Vector2(0, 40), Vector2.One * 10, 0f);
-
+            UICenter = new GameObject("Tira2", new Vector2(0, 0), Vector2.One * 50, 0f);
+            UICenter.Position = UICenter.Position + new Vector2(0,UICenter.TextureCenter.Y);
         }
 
         //------------->FUNCTIONS && METHODS<-------------//
@@ -75,6 +76,13 @@ namespace GameJam2017
 
             //Draws the whole picture.
             Game1.graphics.GraphicsDevice.Viewport = defaultView;
+            Game1.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
+
+            UICenter.DrawObjectFree(cameraUp, 0.01f);
+
+            Game1.spriteBatch.End();
+
+
         }
         /// <summary>
         /// Draws the whole world for one camera.
@@ -85,7 +93,6 @@ namespace GameJam2017
             Game1.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.transform);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
             PlayerOne.DrawObject(camera);
             PlayerTwo.DrawObject(camera);
-            teste.DrawObject(camera);
             Game1.spriteBatch.End();
         }
     }
