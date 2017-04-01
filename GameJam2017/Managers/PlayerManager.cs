@@ -18,13 +18,14 @@ namespace GameJam2017
     {
         public PlayerNumber pNumber;
         protected Animation[] animations;
-        protected Animation currentAnimation;
+        public Animation currentAnimation;
 
         public PlayerManager(string texture, Vector2 position, Vector2 size,PlayerNumber number) : base(texture, position, size, 0f)
         {
             this.animations = new Animation[18];
             this.pNumber = number;
 
+            this.currentAnimation = new Animation("walk", "Walk P1", Vector2.One * 64, 8, 200f);
 
             if(number == PlayerNumber.playerOne)
             {
@@ -35,6 +36,8 @@ namespace GameJam2017
                 //animations.Add();
             }
         }
+
+
         public void Jump(GameTime gameTime)
         {
             position += speedDirection;
@@ -62,13 +65,13 @@ namespace GameJam2017
                 speedDirection.Y = 0;
             }
         }
-        
+          
         public override void DrawObject(Camera camera)
         {
             if (isActive)
             {
                 this.Rectangle = camera.CalculatePixelRectangle(this.position, this.Size);
-                Game1.spriteBatch.Draw(this.Texture, this.Rectangle, currentAnimation.currentFrameRec, Color.White);
+                Game1.spriteBatch.Draw(currentAnimation.spriteTexture, this.Rectangle, currentAnimation.currentFrameRec, Color.White);
             }
         }
     }

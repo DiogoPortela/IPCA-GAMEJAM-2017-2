@@ -25,6 +25,7 @@ namespace GameJam2017
         {
             this.name = name;
             spriteTexture = Game1.content.Load<Texture2D>(texture);
+            this.size = size;
             maxFrames = numberFrames;
             this.frameRate = frameRate;
             currentFrame = 0;
@@ -38,13 +39,14 @@ namespace GameJam2017
             {
                 LastFrameTime -= frameRate;
 
+                currentFrameRec = new Rectangle(spriteTexture.Width / maxFrames * currentFrame, 0, (int)size.X, (int)size.Y);
+
                 currentFrame++;
                 LastFrameTime = 0;
                 if(currentFrame == maxFrames)
                 {
                     currentFrame = 0;
                 }
-                currentFrameRec = new Rectangle(spriteTexture.Width / maxFrames * currentFrame, 0, (int)size.X, (int)size.Y);
             }
         }
         public void Stop()

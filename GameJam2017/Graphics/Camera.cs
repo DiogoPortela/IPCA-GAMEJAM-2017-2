@@ -23,12 +23,12 @@ namespace GameJam2017
         /// </summary>
         /// <param name="origin"> Origin of the world. </param>
         /// <param name="width"> Width of the camera. </param>
-        public Camera(Vector2 origin, float width)
+        public Camera(Vector2 origin, float width, float heighRatio)
         {
             WorldOrigin = origin;
             transform = Matrix.CreateScale(new Vector3(1, 1, 0)) * Matrix.CreateTranslation(new Vector3(-center.X, -center.Y, 0));
             Width = width;
-            Height = width * (float)Game1.graphics.PreferredBackBufferHeight / (float)Game1.graphics.PreferredBackBufferWidth;
+            Height = width * heighRatio;
             Ratio = -1;
             cameraWindowToPixelRatio();
         }
@@ -53,7 +53,7 @@ namespace GameJam2017
             x = (int)(((objectPosition.X - WorldOrigin.X) * Ratio) + 0.5f);
             y = (int)(((objectPosition.Y - WorldOrigin.Y) * Ratio) + 0.5f);
 
-            y = Game1.graphics.PreferredBackBufferHeight - y;
+            y = Game1.graphics.PreferredBackBufferHeight / 2 - y;
         }
         /// <summary>
         /// Convertes the position and size of a rectangle from User-space to Pixel-space.

@@ -15,8 +15,10 @@ namespace GameJam2017
         static public PlayerManager PlayerTwo;
         static public GameObject teste;
 
-        Viewport defaultView, leftView, rightView;
-        Camera cameraLeft, cameraRight;
+        static public GameTime gameTime;
+
+        Viewport defaultView, upView, downView;
+        Camera cameraUp, cameraDown;
 
         public GameState()
         {
@@ -29,20 +31,20 @@ namespace GameJam2017
             //Viewports
             
             defaultView = Game1.graphics.GraphicsDevice.Viewport;
-            leftView = rightView = defaultView;
+            upView = downView = defaultView;
 
             //Dividing it in half, and adjusting the positioning.
-            leftView.Width /= 2;
-            rightView.Width /= 2;
-            rightView.X = leftView.Width;
+            upView.Height /= 2;
+            downView.Height /= 2;
+            downView.Y = upView.Height;
 
             //Initializing cameras.
-            cameraLeft = new Camera(Vector2.Zero, 100);
-            cameraRight = new Camera(new Vector2(0,0), 100);
+            cameraUp = new Camera(Vector2.Zero, 100, ((float)upView.Height / upView.Width));
+            cameraDown = new Camera(new Vector2(0,0), 100, ((float)downView.Height / downView.Width));
             #endregion
 
-            PlayerOne = new PlayerManager("Tile10", new Vector2(20, 20), Vector2.One * 25, PlayerNumber.playerOne);
-            teste = new GameObject("Tile12", new Vector2(0, 75), Vector2.One * 30, 0f);
+            PlayerOne = new PlayerManager("Tile10", new Vector2(0, 10), Vector2.One * 10, PlayerNumber.playerOne);
+            teste = new GameObject("Tile12", new Vector2(0, 40), Vector2.One * 10, 0f);
 
         }
         /// <summary>
@@ -51,11 +53,12 @@ namespace GameJam2017
         public void StateUpdate(GameTime gameTime)
         {
             if (InputManager.MovementPlayerOne.Right == ButtonState.Pressed)
-                PlayerOne.Move(Vector2.UnitX);
+                PlayerOne.Move(Vector2.UnitX * 0.2f);
             if (InputManager.MovementPlayerOne.Left == ButtonState.Pressed)
-                PlayerOne.Move(-Vector2.UnitX);
+                PlayerOne.Move(-Vector2.UnitX * 0.2f);
             if (InputManager.MovementPlayerOne.Up == ButtonState.Pressed)
                 PlayerOne.Jump(gameTime);
+            PlayerOne.currentAnimation.Play(gameTime);
         }
         /// <summary>
         /// Draws the whole gamestate.
@@ -63,12 +66,12 @@ namespace GameJam2017
         public void Draw()
         {
             //Draws the left side
-            Game1.graphics.GraphicsDevice.Viewport = leftView;
-            DrawCameraView(cameraLeft);
+            Game1.graphics.GraphicsDevice.Viewport = upView;
+            DrawCameraView(cameraUp);
 
             //Draws the right side
-            Game1.graphics.GraphicsDevice.Viewport = rightView;
-            DrawCameraView(cameraRight);
+            Game1.graphics.GraphicsDevice.Viewport = downView;
+            DrawCameraView(cameraDown);
 
             //Draws the whole picture.
             Game1.graphics.GraphicsDevice.Viewport = defaultView;
