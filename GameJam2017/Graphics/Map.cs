@@ -53,10 +53,10 @@ namespace GameJam2017
                     //height = (y + 1) * size;
                 }
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
             foreach (Tile tile in ListOfTiles)
-                tile.DrawTile(spriteBatch);
+                tile.DrawTile(spriteBatch, camera);
         }
     }
 }

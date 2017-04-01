@@ -13,24 +13,23 @@ namespace GameJam2017
     {
         static public PlayerManager PlayerOne;
         static public PlayerManager PlayerTwo;
+        static public GameObject teste;
 
-        Viewport defaultView;
-        Viewport leftView;
-        Viewport rightView;
-
+        Viewport defaultView, leftView, rightView;
         Camera cameraLeft, cameraRight;
 
         public GameState()
         {
             #region map generation
             Map mapateste = new Map();
-            mapateste.Generate();
+            //mapateste.Generate();
             #endregion
 
             #region Camera. Split screen
             //Viewports
-            defaultView = GraphicsDevice.Viewport;
-            leftView = rightView = GraphicsDevice.Viewport;
+            
+            defaultView = Game1.graphics.GraphicsDevice.Viewport;
+            leftView = rightView = defaultView;
 
             //Dividing it in half, and adjusting the positioning.
             leftView.Width /= 2;
@@ -38,34 +37,41 @@ namespace GameJam2017
             rightView.X = leftView.Width;
 
             //Initializing cameras.
-            cameraLeft = new Camera();
-            cameraRight = new Camera();
+            cameraLeft = new Camera(Vector2.Zero, 100);
+            cameraRight = new Camera(new Vector2(0,0), 100);
             #endregion
 
             PlayerOne = new PlayerManager("teste", new Vector2(20, 20), Vector2.One * 25, PlayerNumber.playerOne);
+            teste = new GameObject("Ground0", new Vector2(0, 75), Vector2.One * 30, 0f);
+
         }
+        /// <summary>
+        /// Updates the whole gamestate.
+        /// </summary>
         public void Update()
         {
             if (InputManager.MovementPlayerOne.Right == ButtonState.Pressed)
                 PlayerOne.Move(Vector2.UnitX);
             if (InputManager.MovementPlayerOne.Left == ButtonState.Pressed)
                 PlayerOne.Move(-Vector2.UnitX);
-            cameraLeft.Update(PlayerOne.Position);
+            //cameraLeft.Update(PlayerOne.Position);
         }
+        /// <summary>
+        /// Draws the whole gamestate.
+        /// </summary>
         public void Draw()
         {
             //Draws the left side
-            GraphicsDevice.Viewport = leftView;
+            Game1.graphics.GraphicsDevice.Viewport = leftView;
             DrawCameraView(cameraLeft);
 
             //Draws the right side
-            GraphicsDevice.Viewport = rightView;
+            Game1.graphics.GraphicsDevice.Viewport = rightView;
             DrawCameraView(cameraRight);
 
             //Draws the whole picture.
-            GraphicsDevice.Viewport = defaultView;
+            Game1.graphics.GraphicsDevice.Viewport = defaultView;
         }
-
         /// <summary>
         /// Draws the whole world for one camera.
         /// </summary>
@@ -73,7 +79,8 @@ namespace GameJam2017
         void DrawCameraView(Camera camera)
         {
             Game1.spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, camera.transform);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
-            PlayerOne.DrawObject();
+            PlayerOne.DrawObject(camera);
+            teste.DrawObject(camera);
             Game1.spriteBatch.End();
         }
     }

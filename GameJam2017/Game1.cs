@@ -33,7 +33,7 @@ namespace GameJam2017
         /// </summary>
         protected override void Initialize()
         {
-            CameraScaleManager.SetCameraWindow(Vector2.Zero, 100);
+            //CameraScaleManager.SetCameraWindow(Vector2.Zero, 100);
             gameState = new GameState();
 
             base.Initialize();

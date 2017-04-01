@@ -86,11 +86,15 @@ namespace GameJam2017
                 this.position += direction;
             }
         }
-        public void DrawObject()
+        /// <summary>
+        /// Draws object on a camera.
+        /// </summary>
+        /// <param name="camera">Camera to draw to.</param>
+        public void DrawObject(Camera camera)
         {
             if (isActive)
             {
-                this.Rectangle = CameraScaleManager.CalculatePixelRectangle(this.position, this.Size);
+                this.Rectangle = camera.CalculatePixelRectangle(this.position, this.Size);
                 Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
             }
         }
