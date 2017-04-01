@@ -17,11 +17,23 @@ namespace GameJam2017
     internal class PlayerManager : GameObject
     {
         public PlayerNumber pNumber;
-        protected Texture2D WalkSpriteSheet;
+        protected Animation[] animations;
+        protected Animation currentAnimation;
 
         public PlayerManager(string texture, Vector2 position, Vector2 size,PlayerNumber number) : base(texture, position, size, 0f)
         {
+            this.animations = new Animation[18];
             this.pNumber = number;
+
+
+            if(number == PlayerNumber.playerOne)
+            {
+                //animations.Add();
+            }
+            else
+            {
+                //animations.Add();
+            }
         }
         public void Jump(GameTime gameTime)
         {
@@ -50,14 +62,13 @@ namespace GameJam2017
                 speedDirection.Y = 0;
             }
         }
-
+        
         public override void DrawObject(Camera camera)
         {
             if (isActive)
             {
                 this.Rectangle = camera.CalculatePixelRectangle(this.position, this.Size);
-                Rectangle source = ;
-                Game1.spriteBatch.Draw(this.Texture, this.Rectangle, , Color.White);
+                Game1.spriteBatch.Draw(this.Texture, this.Rectangle, currentAnimation.currentFrameRec, Color.White);
             }
         }
     }

@@ -48,7 +48,7 @@ namespace GameJam2017
         /// <summary>
         /// Updates the whole gamestate.
         /// </summary>
-        public void Update(GameTime gameTime)
+        public void StateUpdate(GameTime gameTime)
         {
             if (InputManager.MovementPlayerOne.Right == ButtonState.Pressed)
                 PlayerOne.Move(Vector2.UnitX);
