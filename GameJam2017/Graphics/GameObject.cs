@@ -70,7 +70,7 @@ namespace GameJam2017
         /// <param name="speed">Movement speed.</param>
         public void Move(Vector2 direction, float speed)
         {
-            if(isActive)
+            if (isActive)
             {
                 this.Position += direction * speed;
             }
@@ -81,18 +81,18 @@ namespace GameJam2017
         /// <param name="direction">Movement direction.</param>
         public void Move(Vector2 direction)
         {
-            if(isActive)
+            if (isActive)
             {
                 this.position += direction;
             }
         }
         public void DrawObject()
         {
-            if(isActive)
+            if (isActive)
             {
                 this.Rectangle = CameraScaleManager.CalculatePixelRectangle(this.position, this.Size);
                 Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
-            }            
+            }
         }
 
         public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
@@ -104,40 +104,41 @@ namespace GameJam2017
                 hasJumped = false;
             }
 
-            if(Rectangle.TouchingLeftOf(newRectangle))
+            if (Rectangle.TouchingLeftOf(newRectangle))
             {
                 position.X = newRectangle.X - Rectangle.Width - 2;
             }
 
-            if(Rectangle.TouchingRightOf(newRectangle))
+            if (Rectangle.TouchingRightOf(newRectangle))
             {
                 position.X = newRectangle.X + newRectangle.Width + 2;
             }
 
-            if(Rectangle.TouchingBottomOf(newRectangle))
+            if (Rectangle.TouchingBottomOf(newRectangle))
             {
                 speedDirection.Y = 1f;
             }
 
-            if(position.X < 0)
+            if (position.X < 0)
             {
                 position.X = 0;
             }
 
-            if(position.X > xOffset - Rectangle.Width)
+            if (position.X > xOffset - Rectangle.Width)
             {
                 position.X = xOffset - Rectangle.Width;
             }
 
-            if(position.Y < 0)
+            if (position.Y < 0)
             {
                 speedDirection.Y = 1f;
             }
 
-            if(position.Y > yOffset - Rectangle.Height)
+            if (position.Y > yOffset - Rectangle.Height)
             {
                 position.Y = yOffset - Rectangle.Height;
             }
 
         }
+    }
 }
