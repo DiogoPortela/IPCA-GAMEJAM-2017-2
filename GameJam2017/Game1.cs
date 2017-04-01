@@ -10,14 +10,21 @@ namespace GameJam2017
     /// </summary>
     public class Game1 : Game
     {
+        enum ScreenSelect { MainMenu, Playing, ScoreScreen };
+        ScreenSelect CurrentScreen = ScreenSelect.MainMenu;
+
         static public GraphicsDeviceManager graphics;
         static public SpriteBatch spriteBatch;
         static public ContentManager content;
         static GameState gameState;
 
+        static Button btnPlay;
+
+        int screenWidth = 800, screenHeight = 600;
+        
 
         public Game1()
-        {            
+        {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 600;
@@ -47,7 +54,15 @@ namespace GameJam2017
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            btnPlay = new Button(content.Load<Texture2D>("Poop"), graphics.GraphicsDevice);
+            btnPlay.setPosition(new Vector2(0, 0));
+            //menuState = new MenuState();
+            graphics.PreferredBackBufferWidth = screenWidth;
+            graphics.PreferredBackBufferHeight = screenHeight;
+            //graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
 
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -66,10 +81,31 @@ namespace GameJam2017
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            MouseState mouse = Mouse.GetState();
+
+
+            switch (CurrentScreen)
+            {
+                case ScreenSelect.MainMenu:
+                    btnPlay.Update(mouse);
+                    if (btnPlay.isClicked)
+                    {
+                        CurrentScreen = ScreenSelect.Playing;
+                    }
+                        
+                    break;
+
+                case ScreenSelect.Playing:
+                    gameState.StateUpdate(gameTime);
+                    break;
+
+                case ScreenSelect.ScoreScreen:
+
+                    break;
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            gameState.StateUpdate(gameTime);
 
             base.Update(gameTime);
         }
@@ -82,11 +118,28 @@ namespace GameJam2017
         {
             GraphicsDevice.Clear(Color.HotPink);
 
-            gameState.Draw();
 
-            /*spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
-            
-            spriteBatch.End();*/
+
+            switch (CurrentScreen)
+            {
+                case ScreenSelect.MainMenu:
+                    spriteBatch.Begin();
+                    spriteBatch.Draw(Content.Load<Texture2D>("MainMenu"), new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
+                    btnPlay.Draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
+
+                case ScreenSelect.Playing:
+                    gameState.Draw();
+                    break;
+
+                case ScreenSelect.ScoreScreen:
+
+                    break;
+            }
+
+
+            //spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
 
             base.Draw(gameTime);
         }

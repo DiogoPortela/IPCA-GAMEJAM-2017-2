@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Graphics\Animation.cs" />
+    <Compile Include="Graphics\Button.cs" />
     <Compile Include="Graphics\Camera.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Managers\CollisionManager.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Graphics\Map.cs" />
     <Compile Include="Managers\GameState.cs" />
     <Compile Include="Managers\InputManager.cs" />
+    <Compile Include="Managers\MenuState.cs" />
     <Compile Include="Managers\PlayerManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,6 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.ico" />
+    <Content Include="Content\MainMenu.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Poop.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Tile10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
