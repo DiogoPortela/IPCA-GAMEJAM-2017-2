@@ -31,7 +31,6 @@ namespace GameJam2017
         protected Vector2 objectDiretion;
 
         public bool isActive { get; set; }    //If it's necessary to turn an object on/off.
-        public bool hasJumped;
 
 
         //------------->CONSTRUCTORS<-------------//
@@ -60,7 +59,6 @@ namespace GameJam2017
             this.speedDirection = Vector2.Zero;
             this.objectDiretion = -Vector2.UnitY;
             this.isActive = true;
-            this.hasJumped = true;
         }
 
 
@@ -101,52 +99,6 @@ namespace GameJam2017
                 Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
             }
         }
-        ///
-        public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
-        {
-            if (Rectangle.TouchingTopOf(newRectangle))
-            {
-                Rectangle.Y = newRectangle.Y - Rectangle.Height;
-                speedDirection.Y = 0f;
-                hasJumped = false;
-            }
-
-            if (Rectangle.TouchingLeftOf(newRectangle))
-            {
-                position.X = newRectangle.X - Rectangle.Width - 2;
-            }
-
-            if (Rectangle.TouchingRightOf(newRectangle))
-            {
-                position.X = newRectangle.X + newRectangle.Width + 2;
-            }
-
-            if (Rectangle.TouchingBottomOf(newRectangle))
-            {
-                speedDirection.Y = 1f;
-            }
-
-            if (position.X < 0)
-            {
-                position.X = 0;
-            }
-
-            if (position.X > xOffset - Rectangle.Width)
-            {
-                position.X = xOffset - Rectangle.Width;
-            }
-
-            if (position.Y < 0)
-            {
-                speedDirection.Y = 1f;
-            }
-
-            if (position.Y > yOffset - Rectangle.Height)
-            {
-                position.Y = yOffset - Rectangle.Height;
-            }
-
-        }
-        
+        ///        
     }
 }

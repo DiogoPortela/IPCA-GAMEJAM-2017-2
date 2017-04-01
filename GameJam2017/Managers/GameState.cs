@@ -15,10 +15,10 @@ namespace GameJam2017
         static public PlayerManager PlayerTwo;
         static public GameObject teste;
 
-        static public GameTime gameTime;
-
         Viewport defaultView, upView, downView;
         Camera cameraUp, cameraDown;
+
+        //------------->CONSTRUCTORS<-------------//
 
         public GameState()
         {
@@ -48,6 +48,9 @@ namespace GameJam2017
             teste = new GameObject("Tile12", new Vector2(0, 40), Vector2.One * 10, 0f);
 
         }
+
+        //------------->FUNCTIONS && METHODS<-------------//
+
         /// <summary>
         /// Updates the whole gamestate.
         /// </summary>

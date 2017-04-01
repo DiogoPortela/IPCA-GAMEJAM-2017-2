@@ -11,6 +11,7 @@ namespace GameJam2017
     class Map
     {
         private List<Tile> listOfTiles;
+        public List<Tile> collidableTiles;
         private int height;
         private int width;
 
@@ -32,9 +33,11 @@ namespace GameJam2017
         public Map()
         {
             listOfTiles = new List<Tile>();
+            collidableTiles = new List<Tile>();
         }
 
         //------------->FUNCTIONS && METHODS<-------------//
+
         /// <summary>
         /// Generates a map using an array.
         /// </summary>
@@ -49,8 +52,10 @@ namespace GameJam2017
 
                     if (number > 0)
                         listOfTiles.Add(new Tile(number, new Vector2(x, y + 1), size));
-                    //width = (x + 1) * size;
-                    //height = (y + 1) * size;
+                    switch(number)
+                    {
+                        //ADD TO THE COLLIDABLE LIST
+                    }
                 }
         }
         public void Draw(SpriteBatch spriteBatch, Camera camera)

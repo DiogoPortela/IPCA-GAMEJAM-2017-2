@@ -25,6 +25,12 @@ namespace GameJam2017
         protected Animation[] animations;
         public Animation currentAnimation;
 
+        public bool isFalling;
+        public bool hasJumped;
+        private float fallingSpeed;
+
+        //------------->CONSTRUCTORS<-------------//
+
         public PlayerManager(Vector2 position, Vector2 size, PlayerNumber number) : base(null, position, size, 0f)
         {
             this.animations = new Animation[18];
@@ -43,6 +49,9 @@ namespace GameJam2017
             }
         }
 
+        //------------->FUNCTIONS && METHODS<-------------//
+
+
         /// <summary>
         /// Deals with all the movement and animations.
         /// </summary>
@@ -52,6 +61,8 @@ namespace GameJam2017
             #region PlayerOne
             if (pNumber == PlayerNumber.playerOne)
             {
+                
+                //Movement Controls.
                 if (InputManager.MovementPlayerOne.Right == ButtonState.Pressed && InputManager.MovementPlayerOne.Left != ButtonState.Pressed)
                 {
                     if (currentInput != CurrentInput.Right)
@@ -67,10 +78,28 @@ namespace GameJam2017
                 {
                     this.Move(-Vector2.UnitX * 0.2f);
                 }
-                if (InputManager.MovementPlayerOne.Up == ButtonState.Pressed)
+
+                #region Y movement
+                if (this.Position.Y < this.Size.X)
                 {
-                    this.Jump(gameTime);
+                    isFalling = false;
+                    hasJumped = false;
+                    fallingSpeed = 0;
+                    this.position.Y = this.Size.X;
                 }
+                //While it's falling fall.
+                if (isFalling)
+                {
+                    this.Fall(gameTime);
+                }
+
+                if (InputManager.MovementPlayerOne.Up == ButtonState.Pressed && !hasJumped)
+                {
+                    fallingSpeed = 0.7f;
+                    isFalling = true;
+                    hasJumped = true;
+                }
+                #endregion
             }
             #endregion
 
@@ -83,35 +112,59 @@ namespace GameJam2017
 
             this.currentAnimation.Play(gameTime);
         }
-
-        public void Jump(GameTime gameTime)
+        public void Fall(GameTime gameTime)
         {
-            position += speedDirection;
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && hasJumped == false)
+            position.Y += fallingSpeed;
+            if (fallingSpeed > -0.9)
             {
-                this.position.Y += 10f;
-                speedDirection.Y = 5f;
-                hasJumped = true;
+                fallingSpeed -= (0.001f * gameTime.ElapsedGameTime.Milliseconds);
             }
-
-            if (hasJumped == true)
+        }
+        public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
+        {
+            if (Rectangle.TouchingTopOf(newRectangle))
             {
-                float airtime = 3;
-                speedDirection.Y -= 0.15f * airtime;
-            }
-
-            if (position.Y - Texture.Height <= 52)
-            {
+                Rectangle.Y = newRectangle.Y - Rectangle.Height;
+                speedDirection.Y = 0f;
                 hasJumped = false;
             }
 
-            if (hasJumped == false)
+            if (Rectangle.TouchingLeftOf(newRectangle))
             {
-                speedDirection.Y = 0;
+                position.X = newRectangle.X - Rectangle.Width - 2;
             }
-        }
 
+            if (Rectangle.TouchingRightOf(newRectangle))
+            {
+                position.X = newRectangle.X + newRectangle.Width + 2;
+            }
+
+            if (Rectangle.TouchingBottomOf(newRectangle))
+            {
+                speedDirection.Y = 1f;
+            }
+
+            if (position.X < 0)
+            {
+                position.X = 0;
+            }
+
+            if (position.X > xOffset - Rectangle.Width)
+            {
+                position.X = xOffset - Rectangle.Width;
+            }
+
+            if (position.Y < 0)
+            {
+                speedDirection.Y = 1f;
+            }
+
+            if (position.Y > yOffset - Rectangle.Height)
+            {
+                position.Y = yOffset - Rectangle.Height;
+            }
+
+        }
         public override void DrawObject(Camera camera)
         {
             if (isActive)

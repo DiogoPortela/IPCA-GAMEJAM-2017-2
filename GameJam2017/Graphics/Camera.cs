@@ -18,6 +18,7 @@ namespace GameJam2017
 
 
         //------------->CONSTRUCTORS<-------------//
+
         /// <summary>
         /// Set the camera window size.
         /// </summary>
@@ -32,6 +33,7 @@ namespace GameJam2017
             Ratio = -1;
             cameraWindowToPixelRatio();
         }
+
         //------------->FUNCTIONS && METHODS<-------------//
 
         static private void cameraWindowToPixelRatio()

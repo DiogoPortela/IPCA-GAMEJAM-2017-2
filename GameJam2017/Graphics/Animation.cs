@@ -20,6 +20,7 @@ namespace GameJam2017
         float frameRate;
         float LastFrameTime;
 
+        //------------->CONSTRUCTORS<-------------//
 
         public Animation(string name, string texture, Vector2 size, int numberFrames, float frameRate)
         {
@@ -31,6 +32,8 @@ namespace GameJam2017
             currentFrame = 0;
             LastFrameTime = 0;
         }
+
+        //------------->FUNCTIONS && METHODS<-------------//
 
         public void Play(GameTime gameTime)
         {

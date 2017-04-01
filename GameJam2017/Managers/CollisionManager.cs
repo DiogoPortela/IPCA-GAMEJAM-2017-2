@@ -17,7 +17,6 @@ namespace GameJam2017
                     rect1.Right >= rect2.Left + rect2.Width / 5 &&
                     rect1.Left <= rect2.Right - rect2.Width / 5);
         }
-
         public static bool TouchingBottomOf(this Rectangle rect1, Rectangle rect2)
         {
             return (rect1.Top <= rect2.Bottom + (rect2.Height / 5) &&
@@ -25,7 +24,6 @@ namespace GameJam2017
                     rect1.Right >= rect2.Left + (rect2.Width / 5) &&
                     rect1.Left <= rect2.Right - (rect2.Width / 5));
         }
-
         public static bool TouchingLeftOf(this Rectangle rect1, Rectangle rect2)
         {
             return (rect1.Right <= rect2.Right &&
@@ -33,7 +31,6 @@ namespace GameJam2017
                     rect1.Top <= rect2.Bottom - (rect2.Width / 4) &&
                     rect1.Bottom >= rect2.Top + (rect2.Width / 4));
         }
-
         public static bool TouchingRightOf(this Rectangle rect1, Rectangle rect2)
         {
             return (rect1.Left >= rect2.Left &&
