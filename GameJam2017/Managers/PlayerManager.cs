@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections;
 
 namespace GameJam2017
 {
@@ -15,12 +17,12 @@ namespace GameJam2017
     internal class PlayerManager : GameObject
     {
         public PlayerNumber pNumber;
+        protected Texture2D WalkSpriteSheet;
 
         public PlayerManager(string texture, Vector2 position, Vector2 size,PlayerNumber number) : base(texture, position, size, 0f)
         {
             this.pNumber = number;
         }
-
         public void Jump(GameTime gameTime)
         {
             position += speedDirection;
@@ -46,6 +48,16 @@ namespace GameJam2017
             if(hasJumped == false)
             {
                 speedDirection.Y = 0;
+            }
+        }
+
+        public override void DrawObject(Camera camera)
+        {
+            if (isActive)
+            {
+                this.Rectangle = camera.CalculatePixelRectangle(this.position, this.Size);
+                Rectangle source = ;
+                Game1.spriteBatch.Draw(this.Texture, this.Rectangle, , Color.White);
             }
         }
     }

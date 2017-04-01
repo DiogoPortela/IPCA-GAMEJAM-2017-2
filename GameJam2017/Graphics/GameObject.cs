@@ -89,7 +89,7 @@ namespace GameJam2017
         /// Draws object on a camera.
         /// </summary>
         /// <param name="camera">Camera to draw to.</param>
-        public void DrawObject(Camera camera)
+        public virtual void DrawObject(Camera camera)
         {
             if (isActive)
             {

@@ -41,8 +41,8 @@ namespace GameJam2017
             cameraRight = new Camera(new Vector2(0,0), 100);
             #endregion
 
-            PlayerOne = new PlayerManager("teste", new Vector2(20, 20), Vector2.One * 25, PlayerNumber.playerOne);
-            teste = new GameObject("Ground0", new Vector2(0, 75), Vector2.One * 30, 0f);
+            PlayerOne = new PlayerManager("Tile10", new Vector2(20, 20), Vector2.One * 25, PlayerNumber.playerOne);
+            teste = new GameObject("Tile12", new Vector2(0, 75), Vector2.One * 30, 0f);
 
         }
         /// <summary>
