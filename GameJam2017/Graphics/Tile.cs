@@ -17,16 +17,16 @@ namespace GameJam2017
 
         //------------->CONSTRUCTORS<-------------//
 
-        public Tile(int tileNumber, Vector2 coordinates, int size) : base("Tile" + tileNumber, coordinates * size, Vector2.One, 0f)
+        public Tile(int tileNumber, Vector2 coordinates, int size) : base("Tile" + tileNumber, coordinates * size, new Vector2(size, size), 0f)
         {
-            this.Rectangle = CameraScaleManager.CalculatePixelRectangle(new Vector2(coordinates.X * size, coordinates.Y * size), new Vector2(size, size));
             this.Coordinates = coordinates;
         }
 
         //------------->FUNCTIONS && METHODS<-------------//
 
-        public void DrawTile(SpriteBatch spriteBatch)
+        public void DrawTile(SpriteBatch spriteBatch, Camera camera)
         {
+            this.Rectangle = camera.CalculatePixelRectangle(Position, Size);
             spriteBatch.Draw(Texture, Rectangle, Color.White);
         }
     }

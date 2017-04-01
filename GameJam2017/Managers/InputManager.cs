@@ -20,7 +20,7 @@ namespace GameJam2017
         public ButtonState Down { get { return GetState(Keys.S); } }
         public ButtonState Left { get { return GetState(Keys.A); } }
         public ButtonState Right { get { return GetState(Keys.D); } }
-        public ButtonState TimeSwap { get { return GetState(Keys.X); } }
+        public ButtonState TimeSwap { get { return GetState(Keys.Space); } }
         public ButtonState Start { get { return GetState(Keys.Escape); } }
         public ButtonState Select { get { return GetState(Keys.Back); } }
 

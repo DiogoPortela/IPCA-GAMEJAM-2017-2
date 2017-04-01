@@ -33,7 +33,7 @@ namespace GameJam2017
         /// </summary>
         protected override void Initialize()
         {
-            CameraScaleManager.SetCameraWindow(Vector2.Zero, 100);
+            //CameraScaleManager.SetCameraWindow(Vector2.Zero, 100);
             gameState = new GameState();
 
             base.Initialize();
@@ -69,7 +69,7 @@ namespace GameJam2017
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            gameState.Update();
+            gameState.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -80,13 +80,13 @@ namespace GameJam2017
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
+            GraphicsDevice.Clear(Color.HotPink);
 
             gameState.Draw();
 
-            spriteBatch.End();
+            /*spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);  //THIS WAY DOESNT AFFECT PIXEL ASPECT
+            
+            spriteBatch.End();*/
 
             base.Draw(gameTime);
         }
