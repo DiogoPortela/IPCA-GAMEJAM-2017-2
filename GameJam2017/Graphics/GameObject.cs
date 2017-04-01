@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using GameJam2017.Graphics;
 
 namespace GameJam2017
 {
@@ -98,7 +97,7 @@ namespace GameJam2017
                 Game1.spriteBatch.Draw(this.Texture, this.Rectangle, Color.White);
             }
         }
-
+        ///
         public void Collision(Rectangle newRectangle, int xOffset, int yOffset)
         {
             if (Rectangle.TouchingTopOf(newRectangle))

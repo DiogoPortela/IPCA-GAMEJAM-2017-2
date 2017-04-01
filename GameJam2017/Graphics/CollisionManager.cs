@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-namespace GameJam2017.Graphics
+namespace GameJam2017
 {
+    
     static class CollisionManager
-    {
+    {       
         public static bool TouchingTopOf(this Rectangle rect1, Rectangle rect2)
-        {
+        { 
             return (rect1.Bottom >= rect2.Top - 1 &&
                     rect1.Bottom <= rect2.Top + (rect2.Height / 2) &&
                     rect1.Right >= rect2.Left + rect2.Width / 5 &&
